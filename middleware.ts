@@ -5,7 +5,7 @@ import type { NextRequest } from "next/server";
 const protectedRoutes = ["/account", "/checkout", "/admin"];
 
 // Routes that are always public
-const publicRoutes = ["/", "/shop", "/product", "/about", "/stores", "/sign-in", "/verify"];
+const publicRoutes = ["/", "/shop", "/product", "/about", "/stores", "/sign-in", "/verify", "/auth-callback"];
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -16,7 +16,12 @@ export async function middleware(request: NextRequest) {
   );
 
   if (!isProtectedRoute) {
-    return NextResponse.next();
+    const response = NextResponse.next();
+    // Disable caching for auth-related pages
+    if (pathname === "/auth-callback" || pathname.startsWith("/sign-in")) {
+      response.headers.set("Cache-Control", "no-store, no-cache, must-revalidate");
+    }
+    return response;
   }
 
   // Check for session cookie (BetterAuth uses this cookie name)

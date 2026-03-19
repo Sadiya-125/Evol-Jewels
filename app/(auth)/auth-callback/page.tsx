@@ -1,38 +1,66 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function AuthCallbackPage() {
-  const router = useRouter();
-  const [error, setError] = useState(false);
+  const [status, setStatus] = useState<"loading" | "error">("loading");
 
   useEffect(() => {
     const checkAdminAndRedirect = async () => {
-      try {
-        const response = await fetch("/api/auth/check-admin");
-        const data = await response.json();
+      // Small delay to ensure session cookie is available after OAuth redirect
+      await new Promise((resolve) => setTimeout(resolve, 500));
 
-        if (data.isAdmin) {
-          router.replace("/admin");
-        } else {
-          router.replace("/account");
+      // Retry logic for session availability
+      let attempts = 0;
+      const maxAttempts = 3;
+
+      while (attempts < maxAttempts) {
+        try {
+          const response = await fetch("/api/auth/check-admin", {
+            cache: "no-store",
+            headers: {
+              "Cache-Control": "no-cache",
+            },
+          });
+
+          if (!response.ok) {
+            attempts++;
+            if (attempts < maxAttempts) {
+              await new Promise((resolve) => setTimeout(resolve, 500));
+              continue;
+            }
+            throw new Error("Failed to check admin status");
+          }
+
+          const data = await response.json();
+
+          if (data.isAdmin) {
+            window.location.href = "/admin";
+          } else {
+            window.location.href = "/account";
+          }
+          return;
+        } catch {
+          attempts++;
+          if (attempts < maxAttempts) {
+            await new Promise((resolve) => setTimeout(resolve, 500));
+          }
         }
-      } catch {
-        // If check fails, redirect to account as fallback
-        setError(true);
-        setTimeout(() => {
-          router.replace("/account");
-        }, 2000);
       }
+
+      // If all attempts fail, redirect to account as fallback
+      setStatus("error");
+      setTimeout(() => {
+        window.location.href = "/account";
+      }, 1500);
     };
 
     checkAdminAndRedirect();
-  }, [router]);
+  }, []);
 
-  if (error) {
+  if (status === "error") {
     return (
       <div className="min-h-screen bg-evol-light-grey flex flex-col items-center justify-center px-4">
         <Link href="/">
