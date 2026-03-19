@@ -1,11 +1,8 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-// Routes that require authentication
-const protectedRoutes = ["/account", "/checkout", "/admin"];
-
-// Routes that are always public
-const publicRoutes = ["/", "/shop", "/product", "/about", "/stores", "/sign-in", "/verify", "/auth-callback"];
+// Routes that require authentication via middleware
+const protectedRoutes = ["/checkout"];
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;

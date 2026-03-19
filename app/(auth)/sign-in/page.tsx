@@ -196,7 +196,7 @@ export default function SignInPage() {
                 disabled={isAnyLoading}
                 className="w-full text-sm text-evol-metallic hover:text-evol-red transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Resend code
+                Resend Code
               </button>
             </form>
           )}
