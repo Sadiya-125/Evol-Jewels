@@ -1,15 +1,15 @@
-import nodemailer from "nodemailer";
+import { MailerSend, EmailParams, Sender, Recipient } from "mailersend";
 
-// SMTP Configuration - easily switchable to Resend, SendGrid, AWS SES
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST || "smtp.gmail.com",
-  port: parseInt(process.env.SMTP_PORT || "587"),
-  secure: false, // STARTTLS
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
-  },
+// MailerSend Configuration
+const mailerSend = new MailerSend({
+  apiKey: process.env.MAILERSEND_API_KEY!,
 });
+
+// Sender configuration - using MailerSend verified domain
+const sentFrom = new Sender(
+  "noreply@test-51ndgwvm2j5lzqx8.mlsender.net",
+  "Evol Jewels"
+);
 
 interface SendEmailParams {
   to: string;
@@ -20,16 +20,19 @@ interface SendEmailParams {
 
 export async function sendEmail({ to, subject, html, text }: SendEmailParams): Promise<void> {
   try {
-    const info = await transporter.sendMail({
-      from: '"Evol Jewels" <sadiya.siddiqui@evoljewels.com>',
-      to,
-      subject,
-      html,
-      text,
-    });
-    console.log("Email Sent Successfully:", info.messageId);
+    const recipients = [new Recipient(to)];
+
+    const emailParams = new EmailParams()
+      .setFrom(sentFrom)
+      .setTo(recipients)
+      .setSubject(subject)
+      .setHtml(html)
+      .setText(text);
+
+    const response = await mailerSend.email.send(emailParams);
+    console.log("Email Sent Successfully via MailerSend:", response);
   } catch (error) {
-    console.error("Failed to Send Email:", error);
+    console.error("Failed to Send Email via MailerSend:", error);
     throw error;
   }
 }
@@ -162,7 +165,7 @@ export function generateCombinedAuthEmail({
                 Evol Jewels, Banjara Hills, Hyderabad
               </p>
               <p style="margin: 0; font-size: 11px; color: ${colors.evolMetallic};">
-                sadiya.siddiqui@evoljewels.com
+                noreply@evoljewels.com
               </p>
             </td>
           </tr>
@@ -188,7 +191,7 @@ This Link and Code Expire in 10 Minutes.
 
 ---
 Evol Jewels, Banjara Hills, Hyderabad
-sadiya.siddiqui@evoljewels.com
+noreply@evoljewels.com
   `.trim();
 
   return { html, text };

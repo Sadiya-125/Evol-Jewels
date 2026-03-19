@@ -122,11 +122,11 @@ export default function AccountPage() {
               </div>
               <p className="font-body text-sm text-evol-metallic mb-4">
                 {ordersLoading ? (
-                  "Loading orders..."
+                  "Loading Orders..."
                 ) : orders && orders.length > 0 ? (
-                  `You have ${orders.length} order${orders.length === 1 ? "" : "s"}`
+                  `You have ${orders.length} Order${orders.length === 1 ? "" : "s"}`
                 ) : (
-                  "No orders yet. Start shopping!"
+                  "No Orders Yet. Start Shopping!"
                 )}
               </p>
               <Button
