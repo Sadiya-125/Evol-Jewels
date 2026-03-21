@@ -187,7 +187,7 @@ export default function StoresPage() {
                 <Button variant="primary">Email Us</Button>
               </a>
               <a
-                href="https://wa.me/919876543210"
+                href="https://wa.me/919963661025"
                 target="_blank"
                 rel="noopener noreferrer"
               >

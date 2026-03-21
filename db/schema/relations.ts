@@ -11,6 +11,11 @@ import { items } from "./items";
 import { orders } from "./orders";
 import { orderItems } from "./orderItems";
 import { payments } from "./payments";
+import { collections } from "./collections";
+import { collectionProducts } from "./collectionProducts";
+import { wishlists } from "./wishlists";
+import { cartItems } from "./cartItems";
+import { customisationInquiries } from "./customisationInquiries";
 
 // Products relations
 export const productsRelations = relations(products, ({ one, many }) => ({
@@ -19,6 +24,7 @@ export const productsRelations = relations(products, ({ one, many }) => ({
     references: [categories.id],
   }),
   variants: many(productVariants),
+  collectionProducts: many(collectionProducts),
 }));
 
 // Categories relations
@@ -42,6 +48,8 @@ export const productVariantsRelations = relations(productVariants, ({ one, many 
   }),
   items: many(items),
   orderItems: many(orderItems),
+  wishlists: many(wishlists),
+  cartItems: many(cartItems),
 }));
 
 // Base Variants relations
@@ -73,6 +81,9 @@ export const userRelations = relations(user, ({ many }) => ({
   sessions: many(session),
   accounts: many(account),
   orders: many(orders),
+  wishlists: many(wishlists),
+  cartItems: many(cartItems),
+  customisationInquiries: many(customisationInquiries),
 }));
 
 // Session relations (BetterAuth)
@@ -126,5 +137,54 @@ export const paymentsRelations = relations(payments, ({ one }) => ({
   order: one(orders, {
     fields: [payments.orderId],
     references: [orders.id],
+  }),
+}));
+
+// Collections relations
+export const collectionsRelations = relations(collections, ({ many }) => ({
+  collectionProducts: many(collectionProducts),
+}));
+
+// Collection Products relations (junction table)
+export const collectionProductsRelations = relations(collectionProducts, ({ one }) => ({
+  collection: one(collections, {
+    fields: [collectionProducts.collectionId],
+    references: [collections.id],
+  }),
+  product: one(products, {
+    fields: [collectionProducts.productId],
+    references: [products.id],
+  }),
+}));
+
+// Wishlists relations
+export const wishlistsRelations = relations(wishlists, ({ one }) => ({
+  user: one(user, {
+    fields: [wishlists.userId],
+    references: [user.id],
+  }),
+  productVariant: one(productVariants, {
+    fields: [wishlists.productVariantId],
+    references: [productVariants.id],
+  }),
+}));
+
+// Cart Items relations
+export const cartItemsRelations = relations(cartItems, ({ one }) => ({
+  user: one(user, {
+    fields: [cartItems.userId],
+    references: [user.id],
+  }),
+  productVariant: one(productVariants, {
+    fields: [cartItems.productVariantId],
+    references: [productVariants.id],
+  }),
+}));
+
+// Customisation Inquiries relations
+export const customisationInquiriesRelations = relations(customisationInquiries, ({ one }) => ({
+  user: one(user, {
+    fields: [customisationInquiries.userId],
+    references: [user.id],
   }),
 }));

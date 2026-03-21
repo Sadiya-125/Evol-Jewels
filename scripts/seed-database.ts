@@ -95,35 +95,40 @@ async function seedDatabase() {
         name: "Rings",
         slug: "rings",
         description: "Timeless rings crafted with precision and artistry",
-        image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=800&q=80",
+        image:
+          "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=800&q=80",
       },
       {
         id: nanoid(),
         name: "Necklaces",
         slug: "necklaces",
         description: "Elegant necklaces that complement every neckline",
-        image: "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&q=80",
+        image:
+          "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&q=80",
       },
       {
         id: nanoid(),
         name: "Earrings",
         slug: "earrings",
         description: "Delicate earrings designed to frame your face",
-        image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=800&q=80",
+        image:
+          "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=800&q=80",
       },
       {
         id: nanoid(),
         name: "Bracelets",
         slug: "bracelets",
         description: "Refined bracelets that adorn your wrists",
-        image: "https://images.unsplash.com/photo-1611652022419-a9419f74343d?w=800&q=80",
+        image:
+          "https://images.unsplash.com/photo-1611652022419-a9419f74343d?w=800&q=80",
       },
       {
         id: nanoid(),
         name: "Pendants",
         slug: "pendants",
         description: "Stunning pendants that make a statement",
-        image: "https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?w=800&q=80",
+        image:
+          "https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?w=800&q=80",
       },
     ];
 
@@ -256,6 +261,189 @@ async function seedDatabase() {
     // 5. Seed Products
     console.log("\n📦 Seeding Products...");
     const productData = [
+      // Heart Shape Diamond Products (for Heart of Diamond Collection)
+      {
+        id: nanoid(),
+        name: "Heart Shape Diamond Solitaire Ring",
+        slug: "heart-shape-diamond-solitaire-ring",
+        description:
+          "A stunning heart-shaped lab grown diamond solitaire ring. Perfect for engagements and romantic occasions.",
+        categoryId: categoryData[0].id, // Rings
+        basePrice: "95000.00",
+        images: [
+          "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=800",
+          "https://images.unsplash.com/photo-1611652022419-a9419f74343d?w=800",
+        ],
+        isFeatured: true,
+        isActive: true,
+        makingCharges: "5500.00",
+        gst: "3.00",
+        stockQuantity: 8,
+      },
+      {
+        id: nanoid(),
+        name: "Heart Shape Diamond Pendant",
+        slug: "heart-shape-diamond-pendant",
+        description:
+          "A romantic heart-shaped lab grown diamond pendant that captures the essence of love.",
+        categoryId: categoryData[4].id, // Pendants
+        basePrice: "65000.00",
+        images: [
+          "https://images.unsplash.com/photo-1599643477877-530eb83abc8e?w=800",
+          "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=800",
+        ],
+        isFeatured: true,
+        isActive: true,
+        makingCharges: "4000.00",
+        gst: "3.00",
+        stockQuantity: 10,
+      },
+      {
+        id: nanoid(),
+        name: "Heart Shape Diamond Earrings",
+        slug: "heart-shape-diamond-earrings",
+        description:
+          "Elegant heart-shaped lab grown diamond earrings. A symbol of eternal love.",
+        categoryId: categoryData[2].id, // Earrings
+        basePrice: "75000.00",
+        images: [
+          "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=800",
+          "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?w=800&q=80",
+        ],
+        isFeatured: true,
+        isActive: true,
+        makingCharges: "4500.00",
+        gst: "3.00",
+        stockQuantity: 6,
+      },
+      {
+        id: nanoid(),
+        name: "Heart Shape Diamond Necklace",
+        slug: "heart-shape-diamond-necklace",
+        description:
+          "A delicate necklace featuring a stunning heart-shaped lab grown diamond centerpiece.",
+        categoryId: categoryData[1].id, // Necklaces
+        basePrice: "125000.00",
+        images: [
+          "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800",
+          "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800",
+        ],
+        isFeatured: true,
+        isActive: true,
+        makingCharges: "7000.00",
+        gst: "3.00",
+        stockQuantity: 5,
+      },
+      {
+        id: nanoid(),
+        name: "Heart Shape Diamond Bracelet",
+        slug: "heart-shape-diamond-bracelet",
+        description:
+          "An enchanting bracelet with heart-shaped lab grown diamonds linked in harmony.",
+        categoryId: categoryData[3].id, // Bracelets
+        basePrice: "115000.00",
+        images: [
+          "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=800",
+          "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=800",
+        ],
+        isFeatured: false,
+        isActive: true,
+        makingCharges: "6500.00",
+        gst: "3.00",
+        stockQuantity: 4,
+      },
+      // Flower Diamond Products (for Together Forever Collection)
+      {
+        id: nanoid(),
+        name: "Flower Diamond Ring",
+        slug: "flower-diamond-ring",
+        description:
+          "A captivating ring featuring lab grown diamonds arranged in a beautiful flower motif.",
+        categoryId: categoryData[0].id, // Rings
+        basePrice: "85000.00",
+        images: [
+          "https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=800",
+          "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?w=800",
+        ],
+        isFeatured: true,
+        isActive: true,
+        makingCharges: "5000.00",
+        gst: "3.00",
+        stockQuantity: 10,
+      },
+      {
+        id: nanoid(),
+        name: "Flower Diamond Pendant",
+        slug: "flower-diamond-pendant",
+        description:
+          "A delicate pendant with lab grown diamonds forming a stunning floral design.",
+        categoryId: categoryData[4].id, // Pendants
+        basePrice: "55000.00",
+        images: [
+          "https://images.unsplash.com/photo-1599643477877-530eb83abc8e?w=800",
+          "https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?w=800",
+        ],
+        isFeatured: true,
+        isActive: true,
+        makingCharges: "3500.00",
+        gst: "3.00",
+        stockQuantity: 12,
+      },
+      {
+        id: nanoid(),
+        name: "Flower Diamond Earrings",
+        slug: "flower-diamond-earrings",
+        description:
+          "Exquisite earrings featuring lab grown diamonds arranged in elegant floral patterns.",
+        categoryId: categoryData[2].id, // Earrings
+        basePrice: "65000.00",
+        images: [
+          "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=800",
+          "https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=800",
+        ],
+        isFeatured: true,
+        isActive: true,
+        makingCharges: "4000.00",
+        gst: "3.00",
+        stockQuantity: 8,
+      },
+      {
+        id: nanoid(),
+        name: "Flower Diamond Necklace",
+        slug: "flower-diamond-necklace",
+        description:
+          "A stunning necklace with lab grown diamonds forming intricate floral designs.",
+        categoryId: categoryData[1].id, // Necklaces
+        basePrice: "135000.00",
+        images: [
+          "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800",
+          "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800",
+        ],
+        isFeatured: true,
+        isActive: true,
+        makingCharges: "8000.00",
+        gst: "3.00",
+        stockQuantity: 4,
+      },
+      {
+        id: nanoid(),
+        name: "Flower Diamond Bracelet",
+        slug: "flower-diamond-bracelet",
+        description:
+          "An enchanting bracelet adorned with lab grown diamonds in beautiful flower motifs.",
+        categoryId: categoryData[3].id, // Bracelets
+        basePrice: "95000.00",
+        images: [
+          "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=800",
+          "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=800",
+        ],
+        isFeatured: false,
+        isActive: true,
+        makingCharges: "6000.00",
+        gst: "3.00",
+        stockQuantity: 6,
+      },
+      // Additional General Products
       {
         id: nanoid(),
         name: "Eternal Solitaire Ring",
@@ -302,7 +490,7 @@ async function seedDatabase() {
         basePrice: "65000.00",
         images: [
           "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=800",
-          "https://images.unsplash.com/photo-1596944924591-4646348ed9f9?w=800",
+          "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?w=800&q=80",
         ],
         isFeatured: true,
         isActive: true,
@@ -510,7 +698,8 @@ async function seedDatabase() {
         country: "India",
         phone: "+91 40 2354 8900",
         email: "banjarahills@evoljewels.com",
-        openingHours: "Monday - Saturday: 11:00 AM - 8:00 PM, Sunday: 12:00 PM - 6:00 PM",
+        openingHours:
+          "Monday - Saturday: 11:00 AM - 8:00 PM, Sunday: 12:00 PM - 6:00 PM",
         coordinates: "17.4239,78.4738",
         isActive: true,
       },
@@ -540,7 +729,8 @@ async function seedDatabase() {
         country: "India",
         phone: "+91 40 2784 5600",
         email: "secunderabad@evoljewels.com",
-        openingHours: "Monday - Saturday: 10:30 AM - 8:30 PM, Sunday: 11:00 AM - 5:00 PM",
+        openingHours:
+          "Monday - Saturday: 10:30 AM - 8:30 PM, Sunday: 11:00 AM - 5:00 PM",
         coordinates: "17.4399,78.4983",
         isActive: true,
       },
@@ -564,7 +754,8 @@ async function seedDatabase() {
       for (const store of storeData) {
         // Random quantity between 0 and 5
         const quantity = Math.floor(Math.random() * 6);
-        const reservedQuantity = quantity > 0 ? Math.floor(Math.random() * Math.min(2, quantity)) : 0;
+        const reservedQuantity =
+          quantity > 0 ? Math.floor(Math.random() * Math.min(2, quantity)) : 0;
 
         itemsData.push({
           id: nanoid(),
@@ -581,7 +772,14 @@ async function seedDatabase() {
 
     // 9. Seed Orders
     console.log("\n🛒 Seeding Orders...");
-    const orderStatuses = ["pending", "confirmed", "processing", "shipped", "delivered", "cancelled"];
+    const orderStatuses = [
+      "pending",
+      "confirmed",
+      "processing",
+      "shipped",
+      "delivered",
+      "cancelled",
+    ];
     const orderData: {
       id: string;
       userId: string;
@@ -610,22 +808,38 @@ async function seedDatabase() {
         const subtotal = (Math.random() * 200000 + 50000).toFixed(2);
         const tax = (parseFloat(subtotal) * 0.03).toFixed(2);
         const shippingCost = parseFloat(subtotal) > 100000 ? "0.00" : "500.00";
-        const total = (parseFloat(subtotal) + parseFloat(tax) + parseFloat(shippingCost)).toFixed(2);
+        const total = (
+          parseFloat(subtotal) +
+          parseFloat(tax) +
+          parseFloat(shippingCost)
+        ).toFixed(2);
         const daysAgo = Math.floor(Math.random() * 30);
         const orderDate = new Date(Date.now() - daysAgo * 24 * 60 * 60 * 1000);
 
         orderData.push({
           id: nanoid(),
           userId: customer.id,
-          storeId: Math.random() > 0.7 ? storeData[Math.floor(Math.random() * storeData.length)].id : null,
-          orderNumber: `EVOL-${orderCounter++}`,
-          status: orderStatuses[Math.floor(Math.random() * orderStatuses.length)],
+          storeId:
+            Math.random() > 0.7
+              ? storeData[Math.floor(Math.random() * storeData.length)].id
+              : null,
+          orderNumber: `Evol-${orderCounter++}`,
+          status:
+            orderStatuses[Math.floor(Math.random() * orderStatuses.length)],
           subtotal,
           tax,
           shippingCost,
           total,
-          shippingAddress: `${Math.floor(Math.random() * 999) + 1}, Street ${Math.floor(Math.random() * 99) + 1}, Hyderabad, Telangana 500${Math.floor(Math.random() * 99).toString().padStart(2, "0")}, India`,
-          billingAddress: `${Math.floor(Math.random() * 999) + 1}, Street ${Math.floor(Math.random() * 99) + 1}, Hyderabad, Telangana 500${Math.floor(Math.random() * 99).toString().padStart(2, "0")}, India`,
+          shippingAddress: `${Math.floor(Math.random() * 999) + 1}, Street ${Math.floor(Math.random() * 99) + 1}, Hyderabad, Telangana 500${Math.floor(
+            Math.random() * 99,
+          )
+            .toString()
+            .padStart(2, "0")}, India`,
+          billingAddress: `${Math.floor(Math.random() * 999) + 1}, Street ${Math.floor(Math.random() * 99) + 1}, Hyderabad, Telangana 500${Math.floor(
+            Math.random() * 99,
+          )
+            .toString()
+            .padStart(2, "0")}, India`,
           notes: Math.random() > 0.8 ? "Gift wrap requested" : null,
           createdAt: orderDate,
         });
@@ -670,7 +884,10 @@ async function seedDatabase() {
           quantity,
           unitPrice,
           subtotal,
-          customizationDetails: Math.random() > 0.9 ? JSON.stringify({ engraving: "With Love" }) : null,
+          customizationDetails:
+            Math.random() > 0.9
+              ? JSON.stringify({ engraving: "With Love" })
+              : null,
         });
       }
     }
@@ -697,18 +914,22 @@ async function seedDatabase() {
       // Match payment status to order status
       let paymentStatus = "completed";
       if (order.status === "pending") paymentStatus = "pending";
-      if (order.status === "cancelled") paymentStatus = Math.random() > 0.5 ? "failed" : "refunded";
+      if (order.status === "cancelled")
+        paymentStatus = Math.random() > 0.5 ? "failed" : "refunded";
 
       paymentsData.push({
         id: nanoid(),
         orderId: order.id,
-        paymentMethod: paymentMethods[Math.floor(Math.random() * paymentMethods.length)],
+        paymentMethod:
+          paymentMethods[Math.floor(Math.random() * paymentMethods.length)],
         paymentGateway: "razorpay",
         transactionId: `pay_${nanoid(14)}`,
         status: paymentStatus,
         amount: order.total,
         currency: "INR",
-        paymentDetails: JSON.stringify({ gateway_order_id: `order_${nanoid(14)}` }),
+        paymentDetails: JSON.stringify({
+          gateway_order_id: `order_${nanoid(14)}`,
+        }),
       });
     }
 
@@ -717,7 +938,9 @@ async function seedDatabase() {
 
     console.log("\n✨ Database Seeding Completed Successfully!\n");
     console.log("📊 Summary:");
-    console.log(`   - ${userData.length} Users (1 Admin, ${userData.length - 1} Customers)`);
+    console.log(
+      `   - ${userData.length} Users (1 Admin, ${userData.length - 1} Customers)`,
+    );
     console.log(`   - ${categoryData.length} Categories`);
     console.log(`   - ${baseVariantData.length} Base Variants`);
     console.log(`   - ${stoneSpecData.length} Stone Specifications`);

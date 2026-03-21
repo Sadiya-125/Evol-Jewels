@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
+import { Toaster } from "sonner";
 import "./globals.css";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
+import LayoutWrapper from "@/components/layout/LayoutWrapper";
 import { TRPCProvider } from "@/components/providers/TRPCProvider";
+import FlyToCartProvider from "@/components/animations/FlyToCartProvider";
 
 export const metadata: Metadata = {
   title: "Evol Jewels",
@@ -42,9 +43,10 @@ export default function RootLayout({
       <body className="antialiased">
         <TRPCProvider>
           <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
-            <Navbar />
-            <main>{children}</main>
-            <Footer />
+            <FlyToCartProvider>
+              <LayoutWrapper>{children}</LayoutWrapper>
+              <Toaster position="top-right" />
+            </FlyToCartProvider>
           </ThemeProvider>
         </TRPCProvider>
       </body>

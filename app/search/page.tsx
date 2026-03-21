@@ -36,11 +36,8 @@ function SearchContent() {
     }
   };
 
-  const products =
-    searchResults?.map((p) => ({
-      ...p.product,
-      category: p.category,
-    })) || [];
+  // Search results now return simplified product data directly
+  const products = searchResults || [];
 
   const breadcrumbItems = [
     { label: "Home", href: "/" },
@@ -147,11 +144,6 @@ function SearchContent() {
                         className="object-cover transition-transform duration-500 group-hover:-translate-y-1"
                       />
                     )}
-                    {product.isFeatured && (
-                      <div className="absolute top-4 right-4">
-                        <Badge variant="promotional">Featured</Badge>
-                      </div>
-                    )}
                   </div>
 
                   <h3 className="font-sans text-sm font-medium text-evol-dark-grey mb-1">
@@ -160,12 +152,6 @@ function SearchContent() {
                   <p className="font-body text-sm text-evol-dark-grey mb-3">
                     ₹{parseFloat(product.basePrice).toLocaleString("en-IN")}
                   </p>
-
-                  <div className="flex flex-wrap gap-2 mb-3">
-                    {product.category && (
-                      <Badge variant="default">{product.category.name}</Badge>
-                    )}
-                  </div>
 
                   <Button variant="secondary" className="w-full">
                     View Details

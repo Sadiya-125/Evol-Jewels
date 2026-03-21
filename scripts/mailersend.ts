@@ -10,8 +10,8 @@ async function main() {
     });
 
     const sentFrom = new Sender(
-      "test@test-51ndgwvm2j5lzqx8.mlsender.net",
-      "Evol Jewels"
+      "test@test-z0vklo6v9ppl7qrx.mlsender.net",
+      "Evol Jewels",
     );
 
     const recipients = [

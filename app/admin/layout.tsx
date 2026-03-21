@@ -9,9 +9,17 @@ import {
   Package,
   ShoppingCart,
   Warehouse,
+  Palette,
   LogOut,
   Menu,
   X,
+  FolderOpen,
+  Library,
+  Users,
+  Store,
+  Mail,
+  Gem,
+  Diamond,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useSession } from "@/hooks/useSession";
@@ -22,6 +30,14 @@ const adminNavLinks = [
   { label: "Products", href: "/admin/products", icon: Package },
   { label: "Orders", href: "/admin/orders", icon: ShoppingCart },
   { label: "Inventory", href: "/admin/inventory", icon: Warehouse },
+  { label: "Categories", href: "/admin/categories", icon: FolderOpen },
+  { label: "Collections", href: "/admin/collections", icon: Library },
+  { label: "Users", href: "/admin/users", icon: Users },
+  { label: "Stores", href: "/admin/stores", icon: Store },
+  { label: "Newsletter", href: "/admin/newsletter", icon: Mail },
+  { label: "Base Variants", href: "/admin/variants", icon: Gem },
+  { label: "Stone Specs", href: "/admin/stones", icon: Diamond },
+  { label: "Customise", href: "/admin/customise", icon: Palette },
 ];
 
 export default function AdminLayout({
@@ -91,7 +107,7 @@ export default function AdminLayout({
   return (
     <div className="min-h-screen bg-white flex flex-col lg:flex-row">
       {/* Mobile header */}
-      <div className="lg:hidden sticky top-0 z-50 h-16 bg-evol-light-grey border-b border-evol-grey flex items-center justify-between px-4">
+      <div className="lg:hidden sticky top-0 z-30 h-16 bg-evol-light-grey border-b border-evol-grey flex items-center justify-between px-4">
         <Link href="/admin" className="font-serif text-xl text-evol-dark-grey">
           Admin Panel
         </Link>
@@ -111,7 +127,7 @@ export default function AdminLayout({
       {/* Sidebar */}
       <aside
         className={cn(
-          "fixed lg:static left-0 z-40 w-64 bg-evol-light-grey border-r border-evol-grey flex flex-col transition-transform lg:translate-x-0",
+          "fixed lg:static left-0 z-20 w-64 bg-evol-light-grey border-r border-evol-grey flex flex-col transition-transform lg:translate-x-0",
           "top-16 bottom-0 lg:top-0 lg:inset-y-0", // Account for mobile header
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         )}
@@ -169,7 +185,7 @@ export default function AdminLayout({
       {/* Mobile overlay */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 top-16 bg-black/20 z-30 lg:hidden"
+          className="fixed inset-0 top-16 bg-black/20 z-10 lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}

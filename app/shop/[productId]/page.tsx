@@ -9,6 +9,7 @@ import { ChevronDown, MessageCircle, Mail } from "lucide-react";
 import Button from "@/components/ui/Button";
 import Badge from "@/components/ui/Badge";
 import Breadcrumb from "@/components/ui/Breadcrumb";
+import AddToCartButton from "@/components/cart/AddToCartButton";
 import { trpc } from "@/lib/trpc/client";
 
 export default function ProductDetailPage() {
@@ -260,7 +261,7 @@ export default function ProductDetailPage() {
                 </p>
                 <div className="flex gap-3">
                   <a
-                    href="https://wa.me/919876543210"
+                    href="https://wa.me/919963661025"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 text-sm font-sans text-evol-red hover:text-evol-dark-grey transition-colors"
@@ -280,9 +281,19 @@ export default function ProductDetailPage() {
             )}
 
             {/* Add to Cart */}
-            <Button variant="primary" className="w-full">
-              Add to Cart
-            </Button>
+            {selectedVariant && (
+              <AddToCartButton
+                productId={product.id}
+                productVariantId={selectedVariant.id}
+                name={product.name}
+                image={product.images[0] || null}
+                variantLabel={`${selectedVariant.goldKarat} ${selectedVariant.goldColor} Gold`}
+                price={selectedVariant.price}
+                variant="primary"
+                className="w-full"
+                isCustomizable={selectedVariant.isCustomizable}
+              />
+            )}
           </div>
         </div>
 

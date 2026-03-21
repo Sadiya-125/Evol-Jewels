@@ -1,16 +1,40 @@
 "use client";
 
 import { useState } from "react";
-import { ShoppingCart, Filter } from "lucide-react";
+import { ShoppingCart, Filter, Download } from "lucide-react";
+import { toast } from "sonner";
 import { trpc } from "@/lib/trpc/client";
 import { cn } from "@/lib/utils";
+import Button from "@/components/ui/Button";
+import SortableTableHeader from "@/components/admin/SortableTableHeader";
+import { useSortableTable } from "@/hooks/useSortableTable";
 
 const ORDER_STATUSES = [
-  { value: "pending", label: "Pending", color: "bg-yellow-100 text-yellow-800" },
-  { value: "confirmed", label: "Confirmed", color: "bg-blue-100 text-blue-800" },
-  { value: "processing", label: "Processing", color: "bg-indigo-100 text-indigo-800" },
-  { value: "shipped", label: "Shipped", color: "bg-purple-100 text-purple-800" },
-  { value: "delivered", label: "Delivered", color: "bg-green-100 text-green-800" },
+  {
+    value: "pending",
+    label: "Pending",
+    color: "bg-yellow-100 text-yellow-800",
+  },
+  {
+    value: "confirmed",
+    label: "Confirmed",
+    color: "bg-blue-100 text-blue-800",
+  },
+  {
+    value: "processing",
+    label: "Processing",
+    color: "bg-indigo-100 text-indigo-800",
+  },
+  {
+    value: "shipped",
+    label: "Shipped",
+    color: "bg-purple-100 text-purple-800",
+  },
+  {
+    value: "delivered",
+    label: "Delivered",
+    color: "bg-green-100 text-green-800",
+  },
   { value: "cancelled", label: "Cancelled", color: "bg-red-100 text-red-800" },
 ];
 
@@ -25,6 +49,8 @@ export default function AdminOrdersPage() {
     status: statusFilter || undefined,
   });
 
+  const { sortedData, sortConfig, requestSort } = useSortableTable(data?.orders);
+
   const updateStatus = trpc.admin.updateOrderStatus.useMutation({
     onSuccess: () => {
       refetch();
@@ -34,7 +60,13 @@ export default function AdminOrdersPage() {
   const handleStatusChange = (orderId: string, newStatus: string) => {
     updateStatus.mutate({
       id: orderId,
-      status: newStatus as "pending" | "confirmed" | "processing" | "shipped" | "delivered" | "cancelled",
+      status: newStatus as
+        | "pending"
+        | "confirmed"
+        | "processing"
+        | "shipped"
+        | "delivered"
+        | "cancelled",
     });
   };
 
@@ -57,24 +89,63 @@ export default function AdminOrdersPage() {
   };
 
   const getStatusStyle = (status: string) => {
-    return ORDER_STATUSES.find((s) => s.value === status)?.color || "bg-gray-100 text-gray-800";
+    return (
+      ORDER_STATUSES.find((s) => s.value === status)?.color ||
+      "bg-gray-100 text-gray-800"
+    );
   };
 
   const totalPages = Math.ceil((data?.total || 0) / limit);
 
+  const handleExportCSV = () => {
+    if (!data?.orders.length) {
+      toast.error("No orders to export");
+      return;
+    }
+    const csvContent = [
+      ["Order Number", "Date", "Store", "Total", "Status"].join(","),
+      ...data.orders.map((order) =>
+        [
+          order.orderNumber,
+          formatDate(order.createdAt),
+          order.storeName || "Online",
+          order.total,
+          ORDER_STATUSES.find((s) => s.value === order.status)?.label ||
+            order.status,
+        ].join(","),
+      ),
+    ].join("\n");
+    const blob = new Blob([csvContent], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `orders-${new Date().toISOString().split("T")[0]}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+    toast.success("Exported to CSV");
+  };
+
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="font-serif text-3xl text-evol-dark-grey">Orders</h1>
+          <h1 className="font-serif text-2xl sm:text-3xl text-evol-dark-grey">
+            Orders
+          </h1>
           <p className="font-sans text-sm text-evol-metallic mt-1">
             Manage and track customer orders
           </p>
         </div>
-        <div className="flex items-center gap-2 text-sm text-evol-metallic">
-          <ShoppingCart className="h-4 w-4" />
-          <span>{data?.total || 0} total orders</span>
+        <div className="flex items-center gap-3 flex-wrap">
+          <div className="flex items-center gap-2 text-sm text-evol-metallic">
+            <ShoppingCart className="h-4 w-4" />
+            <span>{data?.total || 0} orders</span>
+          </div>
+          <Button variant="secondary" size="sm" onClick={handleExportCSV}>
+            <Download className="w-3 h-3 shrink-0" />
+            Export CSV
+          </Button>
         </div>
       </div>
 
@@ -106,21 +177,41 @@ export default function AdminOrdersPage() {
           <table className="w-full">
             <thead className="bg-evol-light-grey">
               <tr>
-                <th className="px-4 py-3 text-left font-sans text-xs uppercase tracking-widest text-evol-metallic">
-                  Order
-                </th>
-                <th className="px-4 py-3 text-left font-sans text-xs uppercase tracking-widest text-evol-metallic">
-                  Date
-                </th>
-                <th className="px-4 py-3 text-left font-sans text-xs uppercase tracking-widest text-evol-metallic">
-                  Store
-                </th>
-                <th className="px-4 py-3 text-right font-sans text-xs uppercase tracking-widest text-evol-metallic">
-                  Total
-                </th>
-                <th className="px-4 py-3 text-center font-sans text-xs uppercase tracking-widest text-evol-metallic">
-                  Status
-                </th>
+                <SortableTableHeader
+                  label="Order"
+                  sortKey="orderNumber"
+                  sortConfig={sortConfig}
+                  onSort={requestSort}
+                  align="left"
+                />
+                <SortableTableHeader
+                  label="Date"
+                  sortKey="createdAt"
+                  sortConfig={sortConfig}
+                  onSort={requestSort}
+                  align="left"
+                />
+                <SortableTableHeader
+                  label="Store"
+                  sortKey="storeName"
+                  sortConfig={sortConfig}
+                  onSort={requestSort}
+                  align="left"
+                />
+                <SortableTableHeader
+                  label="Total"
+                  sortKey="total"
+                  sortConfig={sortConfig}
+                  onSort={requestSort}
+                  align="right"
+                />
+                <SortableTableHeader
+                  label="Status"
+                  sortKey="status"
+                  sortConfig={sortConfig}
+                  onSort={requestSort}
+                  align="center"
+                />
               </tr>
             </thead>
             <tbody className="divide-y divide-evol-grey/50">
@@ -132,14 +223,17 @@ export default function AdminOrdersPage() {
                     </td>
                   </tr>
                 ))
-              ) : data?.orders.length === 0 ? (
+              ) : sortedData.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="px-4 py-8 text-center text-evol-metallic">
+                  <td
+                    colSpan={5}
+                    className="px-4 py-8 text-center text-evol-metallic"
+                  >
                     No orders found
                   </td>
                 </tr>
               ) : (
-                data?.orders.map((order) => (
+                sortedData.map((order) => (
                   <tr key={order.id} className="hover:bg-evol-light-grey/30">
                     <td className="px-4 py-4">
                       <span className="font-sans text-sm font-medium text-evol-dark-grey">
@@ -165,12 +259,15 @@ export default function AdminOrdersPage() {
                       <div className="flex justify-center">
                         <select
                           value={order.status}
-                          onChange={(e) => handleStatusChange(order.id, e.target.value)}
+                          onChange={(e) =>
+                            handleStatusChange(order.id, e.target.value)
+                          }
                           disabled={updateStatus.isPending}
                           className={cn(
                             "px-3 py-1 rounded-sm font-sans text-xs font-medium cursor-pointer border-0 focus:outline-none focus:ring-2 focus:ring-evol-red/20",
                             getStatusStyle(order.status),
-                            updateStatus.isPending && "opacity-50 cursor-not-allowed"
+                            updateStatus.isPending &&
+                              "opacity-50 cursor-not-allowed",
                           )}
                         >
                           {ORDER_STATUSES.map((status) => (
@@ -195,20 +292,22 @@ export default function AdminOrdersPage() {
               Page {page + 1} of {totalPages}
             </span>
             <div className="flex gap-2">
-              <button
+              <Button
+                variant="secondary"
+                size="sm"
                 onClick={() => setPage((p) => Math.max(0, p - 1))}
                 disabled={page === 0}
-                className="px-3 py-1 font-sans text-sm border border-evol-grey rounded-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white transition-colors"
               >
                 Previous
-              </button>
-              <button
+              </Button>
+              <Button
+                variant="secondary"
+                size="sm"
                 onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
                 disabled={page >= totalPages - 1}
-                className="px-3 py-1 font-sans text-sm border border-evol-grey rounded-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-white transition-colors"
               >
                 Next
-              </button>
+              </Button>
             </div>
           </div>
         )}

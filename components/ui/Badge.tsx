@@ -2,7 +2,7 @@ import { HTMLAttributes } from "react";
 import { cn } from "@/lib/utils";
 
 export interface BadgeProps extends HTMLAttributes<HTMLDivElement> {
-  variant?: "default" | "promotional";
+  variant?: "default" | "promotional" | "success" | "error";
 }
 
 export default function Badge({ className, variant = "default", children, ...props }: BadgeProps) {
@@ -11,6 +11,8 @@ export default function Badge({ className, variant = "default", children, ...pro
   const variants = {
     default: "bg-evol-light-grey text-evol-dark-grey",
     promotional: "bg-evol-red text-white",
+    success: "bg-green-100 text-green-800",
+    error: "bg-red-100 text-red-800",
   };
 
   return (
