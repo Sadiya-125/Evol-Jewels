@@ -621,7 +621,7 @@ export default function CheckoutPage() {
                     variant="primary"
                     onClick={handlePlaceOrder}
                     disabled={isPlacingOrder}
-                    className="w-full font-sans text-sm uppercase tracking-[0.1em]"
+                    className="w-full font-sans text-sm uppercase tracking-widest"
                   >
                     {isPlacingOrder ? "Placing Your Order..." : "Place Order"}
                   </Button>

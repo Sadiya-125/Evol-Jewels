@@ -136,7 +136,7 @@ export default function OrderConfirmationPage() {
 
           {/* Order Number Pill */}
           <div className="inline-flex items-center justify-center px-6 py-3 bg-evol-light-grey border border-evol-grey rounded-full">
-            <span className="font-sans text-sm font-mono text-evol-dark-grey">
+            <span className="font-sans text-sm text-evol-dark-grey">
               Order #{order.orderNumber}
             </span>
           </div>
@@ -168,7 +168,7 @@ export default function OrderConfirmationPage() {
               {/* Order Items */}
               {order.items.map((item) => (
                 <div key={item.orderItem.id} className="flex gap-4">
-                  <div className="relative w-16 h-16 flex-shrink-0 bg-evol-light-grey rounded overflow-hidden">
+                  <div className="relative w-16 h-16 shrink-0 bg-evol-light-grey rounded overflow-hidden">
                     {item.product?.images && item.product.images.length > 0 ? (
                       <Image
                         src={item.product.images[0]}

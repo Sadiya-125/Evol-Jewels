@@ -59,7 +59,7 @@ export default function OurStoryPage() {
   return (
     <div className="min-h-screen bg-evolOffWhite">
       {/* Section 1: Cinematic Hero */}
-      <section className="relative min-h-[600px] h-screen w-full overflow-hidden bg-evolOffWhite">
+      <section className="relative min-h-150 h-screen w-full overflow-hidden bg-evolOffWhite">
         {/* Mosaic Images */}
         <div className="absolute inset-0 flex flex-wrap">
           <motion.div
@@ -117,7 +117,7 @@ export default function OurStoryPage() {
         </div>
 
         {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/30 to-transparent" />
 
         {/* Centered Content */}
         <div className="absolute inset-0 flex items-center justify-center">
@@ -182,7 +182,7 @@ export default function OurStoryPage() {
               </p>
             </div>
           </div>
-          <div className="relative h-[400px] md:h-auto">
+          <div className="relative h-100 md:h-auto">
             <Image
               src="https://images.unsplash.com/photo-1611652022419-a9419f74343d?w=800&q=80"
               alt="Our beginning"
@@ -200,7 +200,7 @@ export default function OurStoryPage() {
           transition={{ duration: 0.8 }}
           className="grid md:grid-cols-2"
         >
-          <div className="relative h-[400px] md:h-auto order-2 md:order-1">
+          <div className="relative h-100 md:h-auto order-2 md:order-1">
             <Image
               src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&q=80"
               alt="The craft"
@@ -246,12 +246,11 @@ export default function OurStoryPage() {
               </p>
               <p className="text-evolMetallic text-base md:text-lg leading-relaxed">
                 Whether it's an engagement ring that captures your unique bond
-                or a quiet piece of self-love, we're here to make it
-                meaningful.
+                or a quiet piece of self-love, we're here to make it meaningful.
               </p>
             </div>
           </div>
-          <div className="relative h-[400px] md:h-auto">
+          <div className="relative h-100 md:h-auto">
             <Image
               src="https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?w=800&q=80"
               alt="For you"
@@ -416,7 +415,7 @@ export default function OurStoryPage() {
           >
             {/* Instagram Icon */}
             <div className="flex justify-center mb-8">
-              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-evolRed to-evolDarkGrey flex items-center justify-center">
+              <div className="w-20 h-20 rounded-full bg-linear-to-br from-evolRed to-evolDarkGrey flex items-center justify-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"

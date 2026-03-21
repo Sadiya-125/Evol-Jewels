@@ -30,8 +30,21 @@ const inquiryInputSchema = z.object({
     .string()
     .min(20, "Please describe your requirement in at least 20 characters")
     .max(2000, "Requirement must be less than 2000 characters"),
-  budgetRange: z.enum(["under_50k", "50k_1l", "1l_3l", "3l_5l", "above_5l", ""]).optional(),
-  occasion: z.enum(["engagement", "wedding", "anniversary", "birthday", "self", "gift", "other", ""]).optional(),
+  budgetRange: z
+    .enum(["under_50k", "50k_1l", "1l_3l", "3l_5l", "above_5l", ""])
+    .optional(),
+  occasion: z
+    .enum([
+      "engagement",
+      "wedding",
+      "anniversary",
+      "birthday",
+      "self",
+      "gift",
+      "other",
+      "",
+    ])
+    .optional(),
   timeline: z.string().max(200).optional(),
 });
 
@@ -202,7 +215,7 @@ export default function CustomisePage() {
   return (
     <div className="min-h-screen bg-evolOffWhite">
       {/* Section 1: Cinematic Hero */}
-      <section className="relative min-h-[600px] h-screen w-full overflow-hidden bg-evolOffWhite">
+      <section className="relative min-h-150 h-screen w-full overflow-hidden bg-evolOffWhite">
         {/* Mosaic Images */}
         <div className="absolute inset-0 flex flex-wrap">
           <motion.div
@@ -268,7 +281,7 @@ export default function CustomisePage() {
         </div>
 
         {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/30 to-transparent" />
 
         {/* Centered Content */}
         <div className="absolute inset-0 flex items-center justify-center px-4 sm:px-6">
@@ -360,7 +373,7 @@ export default function CustomisePage() {
               </p>
             </div>
           </div>
-          <div className="relative h-[400px] md:h-auto">
+          <div className="relative h-100 md:h-auto">
             <Image
               src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=1200&q=80"
               alt="Bespoke forms"
@@ -379,7 +392,7 @@ export default function CustomisePage() {
           transition={{ duration: 0.8 }}
           className="grid md:grid-cols-2"
         >
-          <div className="relative h-[400px] md:h-auto order-2 md:order-1">
+          <div className="relative h-100 md:h-auto order-2 md:order-1">
             <Image
               src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=1200&q=80"
               alt="A note from the heart"
@@ -430,7 +443,7 @@ export default function CustomisePage() {
               </p>
             </div>
           </div>
-          <div className="relative h-[400px] md:h-auto">
+          <div className="relative h-100 md:h-auto">
             <Image
               src="https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?w=1200&q=80"
               alt="Thorough process"
@@ -1173,7 +1186,7 @@ export default function CustomisePage() {
           >
             {/* Instagram Icon/Logo Area */}
             <div className="flex justify-center mb-8">
-              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-evolRed to-evolDarkGrey flex items-center justify-center">
+              <div className="w-20 h-20 rounded-full bg-linear-to-br from-evolRed to-evolDarkGrey flex items-center justify-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"

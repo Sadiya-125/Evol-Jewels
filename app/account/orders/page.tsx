@@ -51,7 +51,7 @@ export default function OrdersPage() {
             >
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
                 <div>
-                  <p className="font-sans text-sm font-mono text-evol-dark-grey mb-1">
+                  <p className="font-sans text-sm text-evol-dark-grey mb-1">
                     Order #{order.orderNumber}
                   </p>
                   <p className="font-body text-sm text-evol-metallic">

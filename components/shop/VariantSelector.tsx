@@ -108,7 +108,7 @@ export default function VariantSelector({
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "tween", duration: 0.3 }}
-            className="fixed right-0 top-0 bottom-0 w-full sm:w-[480px] bg-white z-50 overflow-y-auto shadow-2xl"
+            className="fixed right-0 top-0 bottom-0 w-full sm:w-120 bg-white z-50 overflow-y-auto shadow-2xl"
           >
             {/* Header */}
             <div className="sticky top-0 bg-white border-b border-evol-grey px-6 py-4 flex items-center justify-between z-10">
@@ -133,7 +133,7 @@ export default function VariantSelector({
                 {/* Product Info */}
                 <div className="flex gap-4">
                   {productImage && (
-                    <div className="relative w-24 h-24 bg-evol-light-grey flex-shrink-0">
+                    <div className="relative w-24 h-24 bg-evol-light-grey shrink-0">
                       <Image
                         src={productImage}
                         alt={productName}

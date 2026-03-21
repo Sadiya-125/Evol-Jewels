@@ -95,8 +95,8 @@ function NavbarContent() {
     <>
       {/* Zone 2 - Logo Bar */}
       <div className="bg-white border-b border-evol-grey">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-20">
-          <div className="flex items-center justify-between h-[60px] md:h-[72px]">
+        <div className="max-w-350 mx-auto px-4 sm:px-6 lg:px-20">
+          <div className="flex items-center justify-between h-15 md:h-18">
             {/* Left - Search (desktop) / Hamburger (mobile) */}
             <div className="flex items-center">
               <button
@@ -116,8 +116,8 @@ function NavbarContent() {
             </div>
 
             {/* Center - Logo */}
-            <Link href="/" className="flex-shrink-0">
-              <div className="relative h-10 md:h-12 w-[80px] md:w-[100px]">
+            <Link href="/" className="shrink-0">
+              <div className="relative h-10 md:h-12 w-[80px] md:w-25">
                 <Image
                   src="/logos/Evol Jewels Logo - Black.png"
                   alt="Evol Jewels"
@@ -207,8 +207,8 @@ function NavbarContent() {
 
       {/* Zone 3 - Navigation Menu Bar (Desktop only) */}
       <div className="hidden md:block bg-white relative">
-        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-20">
-          <div className="flex items-center justify-center h-[44px]">
+        <div className="max-w-350 mx-auto px-4 sm:px-6 lg:px-20">
+          <div className="flex items-center justify-center h-11">
             <nav className="flex items-center gap-6 lg:gap-8">
               {navItems.map((item) => (
                 <div
@@ -243,7 +243,7 @@ function NavbarContent() {
                   {isActive(item.href) && (
                     <motion.div
                       layoutId="activeNavIndicator"
-                      className="absolute -bottom-[13px] left-0 right-0 h-0.5 bg-evol-red"
+                      className="absolute -bottom-3.25 left-0 right-0 h-0.5 bg-evol-red"
                       transition={{
                         type: "spring",
                         stiffness: 380,

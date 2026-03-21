@@ -58,7 +58,10 @@ export default function ParticleCanvas({ items }: ParticleCanvasProps) {
           // Only emit particles during first 85% of flight
           // Calculate current position along bezier curve (matches FlyToCartPortal)
           const controlX = item.startX + (item.endX - item.startX) * 0.4;
-          const controlY = Math.min(item.startY, item.endY) - Math.abs(item.startY - item.endY) * 0.2 - 60;
+          const controlY =
+            Math.min(item.startY, item.endY) -
+            Math.abs(item.startY - item.endY) * 0.2 -
+            60;
 
           const t = progress;
           const x =
@@ -114,7 +117,7 @@ export default function ParticleCanvas({ items }: ParticleCanvasProps) {
             0,
             particle.x,
             particle.y,
-            particle.size * 3
+            particle.size * 3,
           );
           gradient.addColorStop(0, particle.color);
           gradient.addColorStop(1, "rgba(255,255,255,0)");
@@ -145,7 +148,7 @@ export default function ParticleCanvas({ items }: ParticleCanvasProps) {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 pointer-events-none z-[9998]"
+      className="fixed inset-0 pointer-events-none z-9998"
       style={{ isolation: "isolate" }}
     />
   );

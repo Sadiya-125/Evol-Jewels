@@ -65,7 +65,7 @@ export default function CollectionDetailContent({
         )}
 
         {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/30 to-transparent" />
 
         {/* Content */}
         <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-12 lg:p-20">
@@ -138,7 +138,7 @@ export default function CollectionDetailContent({
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="aspect-[4/3] relative overflow-hidden bg-evol-light-grey"
+                className="aspect-4/3 relative overflow-hidden bg-evol-light-grey"
               >
                 <Image
                   src={imageUrl}
@@ -184,7 +184,7 @@ export default function CollectionDetailContent({
                   description: product.description,
                   basePrice: product.basePrice,
                   images: product.images,
-                  isFeatured: false
+                  isFeatured: false,
                 }}
                 category={product.category}
                 index={index}

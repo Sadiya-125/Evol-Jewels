@@ -30,7 +30,12 @@ interface ProductCardProps {
   index?: number;
 }
 
-export default function ProductCard({ product, category, variant, index = 0 }: ProductCardProps) {
+export default function ProductCard({
+  product,
+  category,
+  variant,
+  index = 0,
+}: ProductCardProps) {
   const { isInWishlist, toggleItem } = useWishlistStore();
   const [showVariantSelector, setShowVariantSelector] = useState(false);
 
@@ -46,11 +51,13 @@ export default function ProductCard({ product, category, variant, index = 0 }: P
       productId: product.id,
       productVariantId: variantId,
       name: product.name,
-      image: product.images && product.images.length > 0 ? product.images[0] : null,
+      image:
+        product.images && product.images.length > 0 ? product.images[0] : null,
       price: parseFloat(product.basePrice),
-      variantLabel: variant?.goldKarat && variant?.goldColor
-        ? `${variant.goldKarat} ${variant.goldColor} Gold`
-        : undefined,
+      variantLabel:
+        variant?.goldKarat && variant?.goldColor
+          ? `${variant.goldKarat} ${variant.goldColor} Gold`
+          : undefined,
     });
   };
 
@@ -70,7 +77,7 @@ export default function ProductCard({ product, category, variant, index = 0 }: P
       >
         <Link href={`/shop/${product.id}`} className="block">
           {/* Image Area */}
-          <div className="relative aspect-[4/5] bg-evol-light-grey overflow-hidden">
+          <div className="relative aspect-4/5 bg-evol-light-grey overflow-hidden">
             {product.images && product.images.length > 0 ? (
               <Image
                 src={product.images[0]}
@@ -90,13 +97,15 @@ export default function ProductCard({ product, category, variant, index = 0 }: P
                 onClick={handleWishlistClick}
                 className={`p-2 rounded-full backdrop-blur-sm transition-all ${
                   inWishlist
-                    ? 'bg-evol-red text-white'
-                    : 'bg-white/90 hover:bg-white text-evol-dark-grey'
+                    ? "bg-evol-red text-white"
+                    : "bg-white/90 hover:bg-white text-evol-dark-grey"
                 }`}
-                aria-label={inWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
+                aria-label={
+                  inWishlist ? "Remove from wishlist" : "Add to wishlist"
+                }
               >
                 <Heart
-                  className={`w-4 h-4 ${inWishlist ? 'fill-current' : ''}`}
+                  className={`w-4 h-4 ${inWishlist ? "fill-current" : ""}`}
                   strokeWidth={inWishlist ? 0 : 2}
                 />
               </button>
@@ -128,7 +137,7 @@ export default function ProductCard({ product, category, variant, index = 0 }: P
 
             <div className="flex items-center justify-between">
               <p className="font-sans text-[15px] font-bold text-evol-dark-grey">
-                From ₹{parseFloat(product.basePrice).toLocaleString('en-IN')}
+                From ₹{parseFloat(product.basePrice).toLocaleString("en-IN")}
               </p>
             </div>
 
@@ -147,7 +156,9 @@ export default function ProductCard({ product, category, variant, index = 0 }: P
         onClose={() => setShowVariantSelector(false)}
         productId={product.id}
         productName={product.name}
-        productImage={product.images && product.images.length > 0 ? product.images[0] : null}
+        productImage={
+          product.images && product.images.length > 0 ? product.images[0] : null
+        }
       />
     </>
   );

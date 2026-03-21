@@ -28,7 +28,7 @@ export default function CollectionCard({
     >
       <Link href={`/collections/${collection.slug}`} className="block">
         {/* Image Area */}
-        <div className="relative aspect-[4/5] bg-evol-light-grey overflow-hidden">
+        <div className="relative aspect-4/5 bg-evol-light-grey overflow-hidden">
           {collection.coverImageUrl ? (
             <Image
               src={collection.coverImageUrl}
@@ -43,7 +43,7 @@ export default function CollectionCard({
           )}
 
           {/* Overlay gradient on hover */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         </div>
 
         {/* Card Body */}

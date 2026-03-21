@@ -15,7 +15,7 @@ function generateBezierPoints(
   startY: number,
   endX: number,
   endY: number,
-  steps: number = 8
+  steps: number = 8,
 ): { x: number[]; y: number[]; times: number[] } {
   // Control point - creates a smooth arc toward the cart
   // Position it closer to the end point for a natural "falling into cart" feel
@@ -29,8 +29,10 @@ function generateBezierPoints(
   for (let i = 0; i <= steps; i++) {
     const t = i / steps;
     // Quadratic bezier formula
-    const x = (1 - t) * (1 - t) * startX + 2 * (1 - t) * t * controlX + t * t * endX;
-    const y = (1 - t) * (1 - t) * startY + 2 * (1 - t) * t * controlY + t * t * endY;
+    const x =
+      (1 - t) * (1 - t) * startX + 2 * (1 - t) * t * controlX + t * t * endX;
+    const y =
+      (1 - t) * (1 - t) * startY + 2 * (1 - t) * t * controlY + t * t * endY;
 
     // Adjust position for element size (shrinks from 80px to 20px)
     const size = 80 - 60 * t;
@@ -53,7 +55,7 @@ export default function FlyToCartPortal({ items }: FlyToCartPortalProps) {
 
   return createPortal(
     <div
-      className="fixed inset-0 pointer-events-none z-[9999]"
+      className="fixed inset-0 pointer-events-none z-9999"
       style={{ isolation: "isolate" }}
     >
       <AnimatePresence>
@@ -64,13 +66,15 @@ export default function FlyToCartPortal({ items }: FlyToCartPortalProps) {
             item.startY,
             item.endX,
             item.endY,
-            8
+            8,
           );
 
           // Generate size and opacity arrays matching path length
           const sizes = path.times.map((t) => 80 - 60 * t);
           const scales = path.times.map((t) => 1 - 0.75 * t);
-          const opacities = path.times.map((t) => (t < 0.85 ? 1 : 1 - (t - 0.85) / 0.15));
+          const opacities = path.times.map((t) =>
+            t < 0.85 ? 1 : 1 - (t - 0.85) / 0.15,
+          );
           const rotations = path.times.map((t) => t * 15);
           const blurs = path.times.map((t) => `blur(${t * 2}px)`);
 
@@ -150,6 +154,6 @@ export default function FlyToCartPortal({ items }: FlyToCartPortalProps) {
         })}
       </AnimatePresence>
     </div>,
-    document.body
+    document.body,
   );
 }

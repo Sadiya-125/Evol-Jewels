@@ -1,11 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import { useState, Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { toast } from "sonner";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import {
@@ -21,6 +19,7 @@ import { trpc } from "@/lib/trpc/client";
 import Skeleton from "@/components/ui/Skeleton";
 import ProductCard from "@/components/shop/ProductCard";
 import CollectionCard from "@/components/shop/CollectionCard";
+import NewsletterRedirectHandler from "@/components/layout/NewsletterRedirectHandler";
 
 const brandValues = [
   {
@@ -52,7 +51,6 @@ const brandValues = [
 ];
 
 export default function Home() {
-  const searchParams = useSearchParams();
   const { data: collectionsData, isLoading: collectionsLoading } =
     trpc.collections.featured.useQuery();
   const { data: featuredProductsData, isLoading: productsLoading } =
@@ -73,24 +71,6 @@ export default function Home() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const newsletterMutation = trpc.newsletter.subscribe.useMutation();
-
-  // Handle URL parameters from newsletter confirmation/unsubscribe redirects
-  useEffect(() => {
-    const newsletter = searchParams.get("newsletter");
-    const message = searchParams.get("message");
-
-    if (newsletter === "confirmed") {
-      toast.success(
-        "Your subscription has been confirmed! Welcome to our newsletter.",
-      );
-    } else if (newsletter === "already-confirmed") {
-      toast.info("Your subscription is already confirmed!");
-    } else if (newsletter === "unsubscribed") {
-      toast.success("You have been unsubscribed from our newsletter.");
-    } else if (newsletter === "error" && message) {
-      toast.error(decodeURIComponent(message));
-    }
-  }, [searchParams]);
 
   const handleNewsletterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -119,6 +99,11 @@ export default function Home() {
 
   return (
     <div className="min-h-screen">
+      {/* Newsletter redirect handler */}
+      <Suspense fallback={null}>
+        <NewsletterRedirectHandler />
+      </Suspense>
+
       {/* Section 1: Cinematic Hero with Parallax */}
       <section className="relative h-screen overflow-hidden">
         {/* Hero Background - Split Layout */}
@@ -370,7 +355,7 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="relative aspect-[3/4] overflow-hidden group"
+              className="relative aspect-3/4 overflow-hidden group"
             >
               <Image
                 src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&q=80"
@@ -379,7 +364,7 @@ export default function Home() {
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
                 sizes="(max-width: 768px) 100vw, 33vw"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-evol-dark-grey/30 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-linear-to-t from-evol-dark-grey/30 via-transparent to-transparent" />
             </motion.div>
 
             <motion.div
@@ -387,7 +372,7 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="relative aspect-[3/4] overflow-hidden group"
+              className="relative aspect-3/4 overflow-hidden group"
             >
               <Image
                 src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800&q=80"
@@ -396,7 +381,7 @@ export default function Home() {
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
                 sizes="(max-width: 768px) 100vw, 33vw"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-evol-dark-grey/30 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-linear-to-t from-evol-dark-grey/30 via-transparent to-transparent" />
             </motion.div>
 
             <motion.div
@@ -404,7 +389,7 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="relative aspect-[3/4] overflow-hidden group"
+              className="relative aspect-3/4 overflow-hidden group"
             >
               <Image
                 src="https://images.unsplash.com/photo-1611652022419-a9419f74343d?w=800&q=80"
@@ -413,7 +398,7 @@ export default function Home() {
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
                 sizes="(max-width: 768px) 100vw, 33vw"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-evol-dark-grey/30 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-linear-to-t from-evol-dark-grey/30 via-transparent to-transparent" />
             </motion.div>
           </div>
 
@@ -545,8 +530,8 @@ export default function Home() {
       <section className="relative bg-evol-dark-grey py-16 md:py-24 lg:py-32 px-4 sm:px-6 overflow-hidden">
         {/* Background Decorative Element */}
         <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-white rounded-full" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-white rounded-full" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-200 h-200 border border-white rounded-full" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-150 h-150 border border-white rounded-full" />
         </div>
 
         <motion.div
