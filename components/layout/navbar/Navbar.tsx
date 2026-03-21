@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useSearchParams } from "next/navigation";
@@ -274,12 +275,47 @@ function NavbarContent() {
   );
 }
 
+function NavbarFallback() {
+  return (
+    <header className="sticky top-0 z-50">
+      <div className="bg-white border-b border-evol-grey">
+        <div className="max-w-350 mx-auto px-4 sm:px-6 lg:px-20">
+          <div className="flex items-center justify-between h-15 md:h-18">
+            <div className="flex items-center">
+              <div className="w-5 h-5" />
+            </div>
+            <Link href="/" className="shrink-0">
+              <div className="relative h-10 md:h-12 w-[80px] md:w-25">
+                <Image
+                  src="/logos/Evol Jewels Logo - Black.png"
+                  alt="Evol Jewels"
+                  fill
+                  className="object-contain"
+                  priority
+                />
+              </div>
+            </Link>
+            <div className="flex items-center gap-3 md:gap-5">
+              <div className="w-5 h-5" />
+              <div className="w-5 h-5" />
+              <div className="w-5 h-5" />
+              <div className="w-5 h-5" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+  );
+}
+
 export default function Navbar() {
   return (
     <NavbarProvider>
-      <header className="sticky top-0 z-50">
-        <NavbarContent />
-      </header>
+      <Suspense fallback={<NavbarFallback />}>
+        <header className="sticky top-0 z-50">
+          <NavbarContent />
+        </header>
+      </Suspense>
     </NavbarProvider>
   );
 }

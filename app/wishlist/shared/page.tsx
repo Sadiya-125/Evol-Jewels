@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { Heart, ShoppingCart } from "lucide-react";
@@ -9,7 +10,7 @@ import ProductCard from "@/components/shop/ProductCard";
 import { trpc } from "@/lib/trpc/client";
 import { useCartStore } from "@/lib/stores/cart";
 
-export default function SharedWishlistPage() {
+function SharedWishlistContent() {
   const searchParams = useSearchParams();
   const encodedItems = searchParams.get("items");
   const { addItem: addToCart, openDrawer } = useCartStore();
@@ -175,5 +176,21 @@ export default function SharedWishlistPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+function SharedWishlistFallback() {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-evol-off-white">
+      <p className="font-body text-evol-metallic">Loading Wishlist...</p>
+    </div>
+  );
+}
+
+export default function SharedWishlistPage() {
+  return (
+    <Suspense fallback={<SharedWishlistFallback />}>
+      <SharedWishlistContent />
+    </Suspense>
   );
 }
