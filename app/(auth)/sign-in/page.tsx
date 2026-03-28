@@ -40,7 +40,10 @@ export default function SignInPage() {
 
       setStep("otp");
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : "Failed to send verification email";
+      const message =
+        err instanceof Error
+          ? err.message
+          : "Failed to send verification email";
       setError(message);
     } finally {
       setEmailLoading(false);
@@ -71,7 +74,8 @@ export default function SignInPage() {
         window.location.href = "/account";
       }
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : "Invalid code. Please try again.";
+      const message =
+        err instanceof Error ? err.message : "Invalid code. Please try again.";
       setError(message);
       setOtpLoading(false);
     }
@@ -87,7 +91,8 @@ export default function SignInPage() {
         callbackURL: "/auth-callback",
       });
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : "Failed to sign in with Google";
+      const message =
+        err instanceof Error ? err.message : "Failed to sign in with Google";
       setError(message);
       setGoogleLoading(false);
     }
@@ -145,7 +150,13 @@ export default function SignInPage() {
                 <p className="text-sm text-evol-red font-body">{error}</p>
               )}
 
-              <Button type="submit" variant="primary" loading={emailLoading} disabled={isAnyLoading} className="w-full">
+              <Button
+                type="submit"
+                variant="primary"
+                loading={emailLoading}
+                disabled={isAnyLoading}
+                className="w-full"
+              >
                 Continue
               </Button>
             </form>
@@ -158,11 +169,14 @@ export default function SignInPage() {
                   className="text-sm text-evol-metallic hover:text-evol-red transition-colors mb-4"
                   disabled={isAnyLoading}
                 >
-                  ← Change email
+                  ← Change Email
                 </button>
                 <p className="font-body text-sm text-evol-metallic mb-4">
-                  Check your email for a code or click the link we sent to{" "}
-                  <span className="text-evol-dark-grey font-medium">{email}</span>.
+                  Check your Email for a Code or Click the Link We Sent to{" "}
+                  <span className="text-evol-dark-grey font-medium">
+                    {email}
+                  </span>
+                  .
                 </p>
                 <label
                   htmlFor="otp"
@@ -174,7 +188,9 @@ export default function SignInPage() {
                   id="otp"
                   type="text"
                   value={otp}
-                  onChange={(e) => setOtp(e.target.value.replace(/\D/g, "").slice(0, 6))}
+                  onChange={(e) =>
+                    setOtp(e.target.value.replace(/\D/g, "").slice(0, 6))
+                  }
                   placeholder="000000"
                   required
                   disabled={isAnyLoading}
@@ -186,7 +202,13 @@ export default function SignInPage() {
                 <p className="text-sm text-evol-red font-body">{error}</p>
               )}
 
-              <Button type="submit" variant="primary" loading={otpLoading} disabled={isAnyLoading} className="w-full">
+              <Button
+                type="submit"
+                variant="primary"
+                loading={otpLoading}
+                disabled={isAnyLoading}
+                className="w-full"
+              >
                 Verify
               </Button>
 

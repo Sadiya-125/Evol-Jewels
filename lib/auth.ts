@@ -72,13 +72,13 @@ export const auth = betterAuth({
             // Clear pending magic link
             pendingMagicLinks.delete(email);
 
-            // Send email (don't await to prevent timing attacks)
-            sendEmail({
+            // Await email sending so client knows when it completes
+            await sendEmail({
               to: email,
               subject: "Sign In to Evol Jewels",
               html,
               text,
-            }).catch(console.error);
+            });
           } else {
             // No magic link yet, store OTP and wait for magic link
             // This shouldn't happen if we call magic link first
@@ -89,12 +89,13 @@ export const auth = betterAuth({
               email,
             });
 
-            sendEmail({
+            // Await email sending so client knows when it completes
+            await sendEmail({
               to: email,
               subject: "Sign In to Evol Jewels",
               html,
               text,
-            }).catch(console.error);
+            });
           }
         }
         // email-verification and forget-password types are not used in this app

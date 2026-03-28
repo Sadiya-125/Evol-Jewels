@@ -123,7 +123,7 @@ export default function WishlistPage() {
                 className="font-sans text-xs text-evol-dark-grey hover:underline flex items-center gap-2"
               >
                 <Share2 className="w-4 h-4" />
-                Share this wishlist
+                Share this Wishlist
               </button>
             </div>
 

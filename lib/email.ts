@@ -18,28 +18,66 @@ interface SendEmailParams {
   text: string;
 }
 
+// Helper function to wait for a given duration
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+// Retry configuration
+const MAX_RETRIES = 3;
+const INITIAL_RETRY_DELAY = 1000; // 1 second
+
 export async function sendEmail({
   to,
   subject,
   html,
   text,
 }: SendEmailParams): Promise<void> {
-  try {
-    const recipients = [new Recipient(to)];
+  const recipients = [new Recipient(to)];
 
-    const emailParams = new EmailParams()
-      .setFrom(sentFrom)
-      .setTo(recipients)
-      .setSubject(subject)
-      .setHtml(html)
-      .setText(text);
+  const emailParams = new EmailParams()
+    .setFrom(sentFrom)
+    .setTo(recipients)
+    .setSubject(subject)
+    .setHtml(html)
+    .setText(text);
 
-    const response = await mailerSend.email.send(emailParams);
-    console.log("Email Sent Successfully via MailerSend:", response);
-  } catch (error) {
-    console.error("Failed to Send Email via MailerSend:", error);
-    throw error;
+  let lastError: Error | undefined;
+
+  for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+    try {
+      const response = await mailerSend.email.send(emailParams);
+      console.log(`Email Sent Successfully via MailerSend (attempt ${attempt}):`, response);
+      return; // Success - exit the function
+    } catch (error: unknown) {
+      lastError = error instanceof Error ? error : new Error(String(error));
+      const errorCode = (error as { code?: string })?.code;
+
+      // Check if this is a retryable error (network issues like ECONNRESET, ETIMEDOUT, etc.)
+      const isRetryable =
+        errorCode === "ECONNRESET" ||
+        errorCode === "ETIMEDOUT" ||
+        errorCode === "ENOTFOUND" ||
+        errorCode === "ECONNREFUSED" ||
+        errorCode === "EAI_AGAIN" ||
+        lastError.message?.includes("socket hang up") ||
+        lastError.message?.includes("network");
+
+      if (isRetryable && attempt < MAX_RETRIES) {
+        const retryDelay = INITIAL_RETRY_DELAY * Math.pow(2, attempt - 1); // Exponential backoff
+        console.warn(
+          `MailerSend attempt ${attempt} failed with ${errorCode || lastError.message}. Retrying in ${retryDelay}ms...`
+        );
+        await delay(retryDelay);
+        continue;
+      }
+
+      // Non-retryable error or max retries reached
+      console.error(`Failed to Send Email via MailerSend after ${attempt} attempt(s):`, error);
+      throw error;
+    }
   }
+
+  // Should not reach here, but just in case
+  throw lastError || new Error("Failed to send email after all retries");
 }
 
 // Brand colors
